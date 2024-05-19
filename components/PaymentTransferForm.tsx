@@ -145,7 +145,7 @@ const PaymentTransferForm = () => {
                 <div className="flex w-full flex-col">
                   <FormControl>
                     <Input
-                      placeholder="Enter the public account number"
+                      placeholder="Enter the Account Id"
                       className="input-class"
                       {...field}
                     />
