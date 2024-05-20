@@ -110,8 +110,8 @@ export const transactionCategoryStyles = {
     textColor: "text-success-700",
     chipBackgroundColor: "bg-inherit",
   },
-  Transfer: {
-    borderColor: "border-red-700",
+  'transfer': {
+    borderColor: "border-red-400",
     backgroundColor: "bg-red-700",
     textColor: "text-red-700",
     chipBackgroundColor: "bg-inherit",
@@ -122,7 +122,7 @@ export const transactionCategoryStyles = {
     textColor: "text-[#344054]",
     chipBackgroundColor: "bg-[#F2F4F7]",
   },
-  Success: {
+  'deposit': {
     borderColor: "border-[#12B76A]",
     backgroundColor: "bg-[#12B76A]",
     textColor: "text-[#027A48]",
@@ -135,3 +135,15 @@ export const transactionCategoryStyles = {
     chipBackgroundColor: "bg-inherit",
   },
 };
+
+export const myBankLinks = [
+  {
+    route: '/deposit-cash',
+    label: 'Deposit Cash'
+  },
+  {
+  // imgURL: "/icons/home.svg",
+  route: "/loan",
+  label: "Loan",
+  },
+]
