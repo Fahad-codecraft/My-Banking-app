@@ -7,8 +7,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-import { createTransfer } from "@/lib/actions/transactions.actions";  // Import the createTransfer function
-import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { createTransfer, getBankAccountId } from "@/lib/actions/transactions.actions";  // Import the createTransfer function
+import { getLoggedInUser, getuserByEmail } from "@/lib/actions/user.actions";
 
 import { Button } from "./ui/button";
 import {
@@ -26,13 +26,14 @@ import { Textarea } from "./ui/textarea";
 const formSchema = z.object({
   receiverEmail: z.string().email("Invalid email address"),
   name: z.string().min(4, "Transfer note is too short"),
-  amount: z.string().min(4, "Amount is too short"),
+  amount: z.string().min(1, "Amount is too short"),
   receiverAccountId: z.string().min(8, "Please select a valid sharable Id"),
 });
 
 const PaymentTransferForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,10 +46,20 @@ const PaymentTransferForm = () => {
   });
 
   const submit = async (data: z.infer<typeof formSchema>) => {
-    const loggedIn = await getLoggedInUser();
     setIsLoading(true);
+    setErrorMessage('')
+    const loggedIn = await getLoggedInUser();
 
     try {
+      const user = await getuserByEmail({email: data.receiverEmail});
+      const receiverAccount = await getBankAccountId({ userId: user.$id });
+      console.log(receiverAccount)
+      
+      // Check if the provided account ID matches the fetched account ID
+      if (receiverAccount.accountId !== data.receiverAccountId) {
+        setErrorMessage('The provided account ID does not match the receivers email.')
+        throw new Error("The provided account ID does not match the receiver's email.");
+      }
       // Call the createTransfer function with the form data
       await createTransfer({
         name: data.name,
@@ -62,7 +73,6 @@ const PaymentTransferForm = () => {
     } catch (error) {
       console.error("Submitting create transfer request failed: ", error);
     }
-
     setIsLoading(false);
   };
 
@@ -180,6 +190,10 @@ const PaymentTransferForm = () => {
             </FormItem>
           )}
         />
+
+        {errorMessage && (
+          <div className="text-red-500 text-center mb-4">{errorMessage}</div>
+        )}
 
         <div className="payment-transfer_btn-box">
           <Button type="submit" className="payment-transfer_btn">

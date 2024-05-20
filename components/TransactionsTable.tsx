@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { transactionCategoryStyles } from "@/constants"
-import { cn, formatAmount } from "@/lib/utils"
+import { cn, formatAmount, formatDate } from "@/lib/utils"
 
 const CategoryBadge = ({ category }: CategoryBadgeProps) => {
   const {
@@ -26,12 +26,14 @@ const CategoryBadge = ({ category }: CategoryBadgeProps) => {
 }
 
 const TransactionsTable = ({ transactions }: TransactionTableProps) => {
+  const sortedTransactions = transactions.slice().sort((a, b) => new Date(b.$createdAt).getTime() - new Date(a.$createdAt).getTime());
+
   return (
     <Table>
       <TableHeader className="bg-[#f9fafb]">
         <TableRow>
           <TableHead className="px-2">Transaction</TableHead>
-          <TableHead className="px-2">Sender Account Id</TableHead>
+          <TableHead className="px-2">Date</TableHead>
           <TableHead className="px-2">Receiver Email</TableHead>
           <TableHead className="px-2">Receiver Account Id</TableHead>
           <TableHead className="px-2">Amount</TableHead>
@@ -40,11 +42,12 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {transactions.map((t: Transaction) => {
-          const amount = formatAmount(t.amount)
+        {sortedTransactions.map((t: Transaction) => {
+          const amount = formatAmount(t.amount) 
 
           const isDebit = t.type === 'debit';
           const isCredit = t.type === 'credit';
+          const formattedDate = formatDate(t.$createdAt, 'dd/MM/yyyy HH:mm'); // Using the new formatDate utility function
 
           return (
             <TableRow key={t.$id} className={`${isDebit || amount[0] === '-' ? 'bg-[#FFFBFA]' : 'bg-[#F6FEF9]'} !over:bg-none !border-b-DEFAULT`}>
@@ -56,7 +59,7 @@ const TransactionsTable = ({ transactions }: TransactionTableProps) => {
                 </div>
               </TableCell>
               <TableCell>
-                {t.senderAccount}
+                {formattedDate}
               </TableCell>
               <TableCell>
                 {t.receiverEmail}

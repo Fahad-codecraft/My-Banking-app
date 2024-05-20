@@ -46,7 +46,7 @@ export const updateAccountBalance = async ({accountId, newBalance}: {accountId: 
       MONEY_COLLECTION_ID!,
       res.documents[0].$id,
       {
-        balance: String(newBalance)
+        balance: (newBalance).toString()
       }
     )
   } catch (error) {
@@ -69,7 +69,7 @@ export const getBankAccountId = async ({userId}:{userId:string} ) => {
   }
 }
 
-export const getAccountBalance= async (accountId:string )=> {
+export const getAccountBalance= async (accountId:string)=> {
   try{
     const {database} = await createAdminClient()
 

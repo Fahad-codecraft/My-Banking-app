@@ -35,6 +35,22 @@ export function formatAmount(amount: number): string {
   return formatter.format(amount);
 }
 
+// utils.ts
+export const formatDate = (dateString: string, format: string = 'dd/MM/yyyy HH:mm') => {
+  const date = new Date(dateString);
+
+  const options: { [key: string]: string } = {
+    dd: ('0' + date.getDate()).slice(-2),
+    MM: ('0' + (date.getMonth() + 1)).slice(-2),
+    yyyy: date.getFullYear().toString(),
+    HH: ('0' + date.getHours()).slice(-2),
+    mm: ('0' + date.getMinutes()).slice(-2),
+  };
+
+  return format.replace(/dd|MM|yyyy|HH|mm/g, (matched) => options[matched]);
+};
+
+
 
 // export function formatAmount(amount: number): string {
 //   const formatter = new Intl.NumberFormat("en-US", {
