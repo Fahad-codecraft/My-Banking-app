@@ -50,24 +50,3 @@ export const formatDate = (dateString: string, format: string = 'dd/MM/yyyy HH:m
   return format.replace(/dd|MM|yyyy|HH|mm/g, (matched) => options[matched]);
 };
 
-
-
-// export function formatAmount(amount: number): string {
-//   const formatter = new Intl.NumberFormat("en-US", {
-//     style: "currency",
-//     currency: "INR",
-//     minimumFractionDigits: 2,
-//     maximumFractionDigits: 2,
-//   });
-
-//   // Format the amount using the formatter
-//   let formattedAmount = formatter.format(amount);
-
-//   // Replace the decimal comma with a dot, if necessary
-//   formattedAmount = formattedAmount.replace(',', '.');
-
-//   return formattedAmount;
-// }
-
-// Example usage
-// console.log(formatAmount(9999999999654544)); // "₹9,999,999,999,654,544.00"

@@ -53,7 +53,6 @@ const PaymentTransferForm = () => {
     try {
       const user = await getuserByEmail({email: data.receiverEmail});
       const receiverAccount = await getBankAccountId({ userId: user.$id });
-      console.log(receiverAccount)
       
       // Check if the provided account ID matches the fetched account ID
       if (receiverAccount.accountId !== data.receiverAccountId) {

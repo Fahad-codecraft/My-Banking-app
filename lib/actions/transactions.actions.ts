@@ -161,19 +161,3 @@ export const getTransactions = async ({ userId }: { userId: string }) => {
   }
 };
 
-// export const getJustBankAccountId = async ({userId}:{userId:string} ) => {
-//   try {
-//     const {database} = await createAdminClient()
-//     const response = await database.listDocuments(
-//       DATABASE_ID!,
-//       BANK_COLLECTION_ID!,
-//       [Query.equal('userId', userId)]
-//     )
-
-//     const accountId = response.documents[0].accountId
-//     console.log(accountId)
-//     return parseStringify(response.documents[0])
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }

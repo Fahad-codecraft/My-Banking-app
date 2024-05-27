@@ -28,6 +28,5 @@ export const depositCash = async ({ amount, email }: DepositCashProps) => {
     category: 'deposit',
     senderUserId: user.$id,
   }
-  console.log(trans)
   createTransaction(trans)
 }

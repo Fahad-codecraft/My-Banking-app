@@ -14,14 +14,12 @@ import { Button } from "./ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   amount: z.string().min(1, "Amount is too short")
@@ -60,15 +58,17 @@ const DepositCashForm = () => {
 
   return (
     <div className="p-6 h-screen flex flex-col justify-center items-center">
-
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(submit)} className="flex flex-col">
+        <form onSubmit={form.handleSubmit(submit)} className="flex flex-col rounded-lg p-3 z-50 w-full max-w-lg border bg-background shadow-lg">
+          <div className="w-full flex justify-center items-center">
+          <h1 className="text-2xl text-stone-600 font-semibold">Deposit Cash</h1> 
+          </div>
           <FormField
             control={form.control}
             name="amount"
             render={({ field }) => (
               <FormItem>
-                <div className="payment-transfer_form-item py-5">
+                <div className="payment-transfer_form-item py-5 border-y-2 mt-3">
                   <FormLabel className="text-14 w-full max-w-[280px] font-medium text-gray-700">
                     Amount
                   </FormLabel>

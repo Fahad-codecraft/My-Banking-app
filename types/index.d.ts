@@ -123,3 +123,12 @@ declare interface TransferProps {
 declare interface AccountIdProps {
   accountId: string;
 }
+
+declare interface createLoanProps {
+  principalAmount: string;
+  time: string;
+  intrestRate: string;
+  repayAmount: string;
+  remainingAmount: string;
+  accountId: string;
+}
