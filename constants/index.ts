@@ -1,23 +1,27 @@
 export const sidebarLinks = [
   {
-    // imgURL: "/icons/home.svg",
     route: "/",
     label: "Home",
   },
+  // {
+  //   route: "/my-bank",
+  //   label: "My Bank",
+  // },
   {
-    // imgURL: "/icons/dollar-circle.svg",
-    route: "/my-bank",
-    label: "My Bank",
-  },
-  {
-    // imgURL: "/icons/transaction.svg",
     route: "/transaction-history",
     label: "Transaction History",
   },
   {
-    // imgURL: "/icons/money-send.svg",
     route: "/payment-transfer",
     label: "Transfer Funds",
+  },
+  {
+    route: "/deposit-cash",
+    label: "Deposit Cash",
+  },
+  {
+    route: "/loan",
+    label: "Loan",
   },
 ];
 

@@ -131,4 +131,26 @@ declare interface createLoanProps {
   repayAmount: string;
   remainingAmount: string;
   accountId: string;
+  reason: string;
+}
+
+declare type LoanProps = {
+  id:string;
+  $id: string;
+  principalAmount: string;
+  remainingAmount: string;
+  intrestRate: string;
+  time: string;
+  $createdAt: string;
+  reason: string;
+}
+
+declare interface LoansTableProps {
+  Loans: LoanProps[];
+}
+
+declare interface LoanDropdownProps {
+    loans: LoanProps[];
+    setValue?: UseFormSetValue<any>;
+    otherStyles?: string;
 }

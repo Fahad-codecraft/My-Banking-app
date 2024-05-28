@@ -1,4 +1,6 @@
+import LoanRepaymentForm from "@/components/LoanRepaymentForm"
 import LoanRequestForm from "@/components/LoanRequestForm"
+import LoansTable from "@/components/LoansTable"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -16,21 +18,35 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { requestLoan } from "@/lib/actions/loan.actions"
+import { getLoans } from "@/lib/actions/loan.actions"
 import { getLoggedInUser } from "@/lib/actions/user.actions"
 
 const TabsDemo = async () => {
-  // const loggedIn = await getLoggedInUser()
-  // requestLoan({email: loggedIn.email, principalAmount: "1000", time: "12"})
-  return (
-    <section className="h-screen flex flex-col justify-center items-center">
+  const loggedIn = await getLoggedInUser()
 
-      <Tabs defaultValue="loan" className="no-scrollbar flex flex-col">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger className="data-[state=active]:border" value="loan">Request Loan</TabsTrigger>
+  const loans = await getLoans(loggedIn.email)
+  return (
+    <section className="p-4 h-screen flex flex-col justify-center items-center w-full">
+
+      <Tabs defaultValue="loan" className="no-scrollbar flex flex-col w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger className="data-[state=active]:border" value="loan">Loan</TabsTrigger>
+          <TabsTrigger className="data-[state=active]:border" value="requestLoan">Request Loan</TabsTrigger>
           <TabsTrigger className="data-[state=active]:border" value="repayLoan">Repay Loan</TabsTrigger>
         </TabsList>
         <TabsContent value="loan">
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                Loans
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <LoansTable Loans={loans}/>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="requestLoan">
           <Card>
             <CardHeader>
               <CardTitle>Request Loan</CardTitle>
@@ -44,19 +60,9 @@ const TabsDemo = async () => {
           <Card>
             <CardHeader>
               <CardTitle>Password</CardTitle>
-              <CardDescription>
-                Change your password here. After saving, you'll be logged out.
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <div className="space-y-1">
-                <Label htmlFor="current">Current password</Label>
-                <Input id="current" type="password" />
-              </div>
-              <div className="space-y-1">
-                <Label htmlFor="new">New password</Label>
-                <Input id="new" type="password" />
-              </div>
+              <LoanRepaymentForm loans={loans}/>
             </CardContent>
           </Card>
         </TabsContent>
