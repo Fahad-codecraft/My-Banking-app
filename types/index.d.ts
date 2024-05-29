@@ -154,3 +154,13 @@ declare interface LoanDropdownProps {
     setValue?: UseFormSetValue<any>;
     otherStyles?: string;
 }
+
+declare interface LoanRepayProp {
+  email: string;
+  loanReason: string;
+  repayAmount: string;
+}
+
+declare interface loanFindProp {
+  remainingAmount: string;
+}

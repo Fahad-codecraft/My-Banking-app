@@ -19,16 +19,20 @@ export const LoansDropdown = ({
   setValue,
   otherStyles,
 }: LoanDropdownProps) => {
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const [selected, setSeclected] = useState(loans[0]);
+  const [selected, setSelected] = useState(loans[0]);
 
   const handleChange = (value: string) => {
-    const selectedLoan = loans.find((loan) => loan.reason === value)!;
-    setSeclected(selectedLoan);
+    const selectedLoan = loans.find((loan) => loan.reason === value);
+    if (selectedLoan) {
+      setSelected(selectedLoan);
 
-    if (setValue) {
-      setValue("reason", value);
+      if (setValue) {
+        setValue("reason", value);
+      }
+
+      console.log(value);
+      console.log(selectedLoan);
     }
   };
 
@@ -50,19 +54,21 @@ export const LoansDropdown = ({
           <SelectLabel className="py-2 font-normal text-gray-500">
             Select a Loan to repay
           </SelectLabel>
-          {loans.map((loan) => (
-            <SelectItem
-              key={loan.$id}
-              value={loan.reason}
-            >
-              <div className="flex flex-col ">
-                <p className="text-16 font-medium">{loan.reason}</p>
-                <p className="text-14 font-medium text-blue-600">
-                  {loan.remainingAmount}
-                </p>
-              </div>
-            </SelectItem>
-          ))}
+          {loans
+            .filter((loan) => parseFloat(loan.remainingAmount) > 0)
+            .map((loan) => (
+              <SelectItem
+                key={loan.$id}
+                value={loan.reason}
+              >
+                <div className="flex flex-col ">
+                  <p className="text-16 font-medium">{loan.reason}</p>
+                  <p className="text-14 font-medium text-blue-600">
+                    {loan.remainingAmount}
+                  </p>
+                </div>
+              </SelectItem>
+            ))}
         </SelectGroup>
       </SelectContent>
     </Select>

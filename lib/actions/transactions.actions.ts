@@ -96,9 +96,10 @@ export const createTransfer = async ({ name, senderEmail, receiverEmail, amount 
     const senderBalancedoc = await getAccountBalance(senderAccountId.$id);
     const senderBalance = parseFloat(senderBalancedoc.balance);
     const receiverBalancedoc = await getAccountBalance(receiverAccountId.$id);
+    const receiverBalance = parseFloat(receiverBalancedoc.balance);
 
     updateAccountBalance({ accountId: senderAccountId.$id, newBalance: senderBalance - parseFloat(amount) });
-    updateAccountBalance({ accountId: receiverAccountId.$id, newBalance: parseFloat(receiverBalancedoc.balance) + parseFloat(amount) });
+    updateAccountBalance({ accountId: receiverAccountId.$id, newBalance: receiverBalance + parseFloat(amount) });
 
     const senderTransaction = {
       name,

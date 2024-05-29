@@ -18,13 +18,15 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
-import { getLoans } from "@/lib/actions/loan.actions"
+import { getLoans, repayLoan } from "@/lib/actions/loan.actions"
 import { getLoggedInUser } from "@/lib/actions/user.actions"
 
 const TabsDemo = async () => {
   const loggedIn = await getLoggedInUser()
 
   const loans = await getLoans(loggedIn.email)
+  
+  // const loan = await repayLoan(loggedIn.email)
   return (
     <section className="p-4 h-screen flex flex-col justify-center items-center w-full">
 
@@ -59,7 +61,7 @@ const TabsDemo = async () => {
         <TabsContent value="repayLoan">
           <Card>
             <CardHeader>
-              <CardTitle>Password</CardTitle>
+              <CardTitle>Repay Loan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <LoanRepaymentForm loans={loans}/>

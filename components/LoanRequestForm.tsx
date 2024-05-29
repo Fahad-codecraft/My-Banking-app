@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { requestLoan } from "@/lib/actions/loan.actions";
+import { checkReason, requestLoan } from "@/lib/actions/loan.actions";
 
 import { Button } from "./ui/button";
 import {
@@ -31,6 +31,7 @@ const formSchema = z.object({
 const LoanRequestForm = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -48,18 +49,23 @@ const LoanRequestForm = () => {
     const loggedIn = await getLoggedInUser();
 
     try {
+      const res = checkReason(data.reason)
 
+      if (!res) {
+        await requestLoan({
+          email: loggedIn.email,
+          principalAmount: data.requestAmount,
+          time: data.time,
+          reason: data.reason
+        });
+        
+        // Optional: redirect or show a success message
+        setSuccessMessage('Loan request Approved!');
+        router.push("/")
+      } else {
+        setErrorMessage("Reason already exists")
+      }
       // Call the createTransfer function with the form data
-      await requestLoan({
-        email: loggedIn.email,
-        principalAmount: data.requestAmount,
-        time: data.time,
-        reason: data.reason
-      });
-
-      // Optional: redirect or show a success message
-      setSuccessMessage('Loan request Approved!');
-      router.push("/")
     } catch (error) {
       console.error("Submitting loan request failed: ", error);
     }
@@ -144,6 +150,9 @@ const LoanRequestForm = () => {
             )}
           />
 
+          {errorMessage && (
+            <FormDescription className="text-red-500">{errorMessage}</FormDescription>
+          )}
           {successMessage && (
             <FormDescription className="text-green-500">{successMessage}</FormDescription>
           )}
