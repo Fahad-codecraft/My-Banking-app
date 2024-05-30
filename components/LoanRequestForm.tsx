@@ -73,7 +73,6 @@ const LoanRequestForm = () => {
   };
 
   return (
-    <section className="p-4  flex flex-col justify-center items-center">
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submit)} className="flex flex-col">
@@ -170,7 +169,6 @@ const LoanRequestForm = () => {
           </div>
         </form>
       </Form>
-    </section>
   );
 };
 

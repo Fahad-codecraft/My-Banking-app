@@ -1,21 +1,12 @@
 import Link from 'next/link'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import TransactionsTable from './TransactionsTable'
 
 
 const RecentTransactions = ({
   transactions = [],
   userId,
-  // page = 1,
 }: RecentTransactionsProps) => {
 
-  // const rowsPerPage = 10;
-  // const totalPages = Math.ceil(transactions.length / rowsPerPage)
-
-  // const indexOfLastTransaction = page * rowsPerPage;
-  // const indexOfFirstTransaction = indexOfLastTransaction - rowsPerPage;
-
-  // const currentTransactions = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
 
   return (
     <section className='recent-transactions'>
@@ -33,15 +24,6 @@ const RecentTransactions = ({
       <TransactionsTable
         transactions={transactions}
       />
-
-      {/* {totalPages > 1 &&(
-              <div className='my-4 w-full'>
-                <Pagination 
-                  totalPages={totalPages}
-                  page={page}
-                />
-              </div>
-            )} */}
 
 
     </section>

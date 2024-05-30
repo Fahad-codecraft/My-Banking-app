@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import { repayLoan, requestLoan } from "@/lib/actions/loan.actions";
+import { repayLoan } from "@/lib/actions/loan.actions";
 
 import { Button } from "./ui/button";
 import {
@@ -81,84 +81,81 @@ const LoanRepaymentForm = ({ loans }: LoanDropdownProps) => {
   };
 
   return (
-    <section className="p-4  flex flex-col justify-center items-center">
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(submit)} className="flex flex-col">
-          <FormField
-            control={form.control}
-            name="reason"
-            render={() => (
-              <FormItem className="border-t border-gray-200">
-                <div className="payment-transfer_form-item pb-6 pt-5">
-                  <div className="payment-transfer_form-content">
-                    <FormLabel className="text-14 font-medium text-gray-700">
-                      Select Loan to repay
-                    </FormLabel>
-                    {/* <FormDescription className="text-12 font-normal text-gray-600">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(submit)} className="flex flex-col">
+        <FormField
+          control={form.control}
+          name="reason"
+          render={() => (
+            <FormItem className="border-t border-gray-200">
+              <div className="payment-transfer_form-item pb-6 pt-5">
+                <div className="payment-transfer_form-content">
+                  <FormLabel className="text-14 font-medium text-gray-700">
+                    Select Loan to repay
+                  </FormLabel>
+                  {/* <FormDescription className="text-12 font-normal text-gray-600">
                     Select the bank account you want to transfer funds from
                   </FormDescription> */}
-                  </div>
-                  <div className="flex w-full flex-col">
-                    <FormControl>
-                      <LoansDropdown
-                        loans={loans}
-                        setValue={form.setValue}
-                        otherStyles="!w-full"
-                      />
-                    </FormControl>
-                    <FormMessage className="text-12 text-red-500" />
-                  </div>
                 </div>
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="repayAmount"
-            render={({ field }) => (
-              <FormItem className="border-t border-gray-200">
-                <div className="payment-transfer_form-item pb-5 pt-6">
-                  <FormLabel className="text-14 w-full max-w-[280px] font-medium text-gray-700">
-                    Amount to Repay
-                  </FormLabel>
-                  <div className="flex w-full flex-col">
-                    <FormControl>
-                      <Input
-                        placeholder="ex: 1000"
-                        className="input-class"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-12 text-red-500" />
-                  </div>
+                <div className="flex w-full flex-col">
+                  <FormControl>
+                    <LoansDropdown
+                      loans={loans}
+                      setValue={form.setValue}
+                      otherStyles="!w-full"
+                    />
+                  </FormControl>
+                  <FormMessage className="text-12 text-red-500" />
                 </div>
-              </FormItem>
+              </div>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="repayAmount"
+          render={({ field }) => (
+            <FormItem className="border-t border-gray-200">
+              <div className="payment-transfer_form-item pb-5 pt-6">
+                <FormLabel className="text-14 w-full max-w-[280px] font-medium text-gray-700">
+                  Amount to Repay
+                </FormLabel>
+                <div className="flex w-full flex-col">
+                  <FormControl>
+                    <Input
+                      placeholder="ex: 1000"
+                      className="input-class"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage className="text-12 text-red-500" />
+                </div>
+              </div>
+            </FormItem>
+          )}
+        />
+        {errorMessage && (
+          <FormDescription className="text-red-500">{errorMessage}</FormDescription>
+        )}
+
+        {successMessage && (
+          <FormDescription className="text-green-500">{successMessage}</FormDescription>
+        )}
+
+        <div className="payment-transfer_btn-box">
+          <Button type="submit" className="payment-transfer_btn">
+            {isLoading ? (
+              <>
+                <Loader2 size={20} className="animate-spin" /> &nbsp; Sending...
+              </>
+            ) : (
+              "Repay Loan"
             )}
-          />
-          {errorMessage && (
-            <FormDescription className="text-red-500">{errorMessage}</FormDescription>
-          )}
-
-          {successMessage && (
-            <FormDescription className="text-green-500">{successMessage}</FormDescription>
-          )}
-
-          <div className="payment-transfer_btn-box">
-            <Button type="submit" className="payment-transfer_btn">
-              {isLoading ? (
-                <>
-                  <Loader2 size={20} className="animate-spin" /> &nbsp; Sending...
-                </>
-              ) : (
-                "Repay Loan"
-              )}
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </section>
+          </Button>
+        </div>
+      </form>
+    </Form>
   )
 }
 

@@ -96,7 +96,7 @@ declare interface TransactionTableProps {
 declare interface RecentTransactionsProps {
   transactions: Transaction[];
   userId: string;
-  // page: number;
+  page: number;
 }
 
 declare interface CreateTransactionProps {
@@ -163,4 +163,14 @@ declare interface LoanRepayProp {
 
 declare interface loanFindProp {
   remainingAmount: string;
+}
+
+
+declare interface PaginationProps {
+  page: number
+  totalPages: number
+}
+
+declare interface MobileNavProps {
+  user: User;
 }

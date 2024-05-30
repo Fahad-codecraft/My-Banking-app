@@ -1,5 +1,4 @@
 import AnimatedCounter from './AnimatedCounter'
-import { getMoney } from '@/lib/actions/user.actions'
 
 const TotalBalanceBox = async ({ totalCurrentBalance }: TotalBalanceBoxProps) => {
 
