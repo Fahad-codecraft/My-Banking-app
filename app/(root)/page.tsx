@@ -35,7 +35,6 @@ const Home = async () => {
         <RecentTransactions
           transactions={trans}
           userId={userid}
-        //  page={currentPage}
         />
       </div>
     </section>

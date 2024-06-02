@@ -42,11 +42,6 @@ const TransactionHistory = async () => {
           <TransactionsTable
             transactions={trans}
           />
-          {/* {totalPages > 1 && (
-              <div className="my-4 w-full">
-                <Pagination totalPages={totalPages} page={currentPage} />
-              </div>
-            )} */}
         </section>
       </div>
     </div>
