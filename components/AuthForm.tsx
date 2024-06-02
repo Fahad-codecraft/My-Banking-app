@@ -1,6 +1,6 @@
 'use client'
 
-import { z } from 'zod'
+import { undefined, z } from 'zod'
 import { Loader2 } from 'lucide-react'
 
 import { Form } from './ui/form'
@@ -13,12 +13,21 @@ import { signIn, signUp } from '@/lib/actions/user.actions'
 import Link from 'next/link'
 import CustomInput from './CustomInput'
 import { Button } from './ui/button'
+import { AlertCircle } from "lucide-react"
+
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+} from "@/components/ui/alert"
 
 const AuthForm = ({ type }: { type: string }) => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState(null)
   const formSchema = authFormSchema(type)
+  const [error, setError] = useState("")
+  const [success, setSuccess] = useState("")
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -55,12 +64,22 @@ const AuthForm = ({ type }: { type: string }) => {
           password: data.password
         })
 
-        if (response) router.push('/')
+        if (!response || response.error){
+          setSuccess("")
+          setError("Invalid credentials")
+        }
+
+        if (response) {
+          router.push('/')
+          setError("")
+          setSuccess("Successfully logged in redirecting to home page...")
+        }
       }
 
       if (type === 'sign-up') router.push('/sign-in')
     } catch (error) {
       console.log(error)
+      setError("Invalid credentials")
     } finally {
       setIsLoading(false)
     }
@@ -73,6 +92,30 @@ const AuthForm = ({ type }: { type: string }) => {
         >
           <h1 className='text-[34px]'>Bank</h1>
         </Link>
+
+        {
+          error && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>
+                {error}
+              </AlertDescription>
+            </Alert>
+          )
+        }
+
+        {
+          success &&(
+            <Alert variant="success">
+              <AlertCircle className="h-6 truncate" />
+              <AlertTitle>Success</AlertTitle>
+              <AlertDescription>
+                {success}
+              </AlertDescription>
+            </Alert>
+          )
+        }
 
         <div className="flex flex-col gap-1 md:gap-3">
           <h1 className="text-24 lg:text-36 font-semibold text-gray-900">
