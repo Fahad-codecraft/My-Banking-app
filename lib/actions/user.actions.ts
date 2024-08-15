@@ -111,6 +111,7 @@ export const signUp = async ({ password, ...userData }: SignUpParams) => {
     });
 
     const accountId = await generateAccountId();
+    console.log(accountId)
 
     await createBankAccount({
       userId: newUser.$id,
@@ -177,7 +178,7 @@ export const createBankAccount = async ({
       ID.unique(),
       {
         userId,
-        accountId,
+        accountId: bankAccount.$id,
         balance: '0',
       }
     )

@@ -223,7 +223,6 @@ export const checkReason = async(reason:string) => {
       LOAN_COLLECTION_ID!,
       [Query.equal('reason', [reason])]
     )
-
     if (doc.documents.length === 0) {
       return false
     }

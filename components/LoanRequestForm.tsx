@@ -49,8 +49,7 @@ const LoanRequestForm = () => {
     const loggedIn = await getLoggedInUser();
 
     try {
-      const res = checkReason(data.reason)
-
+      const res = await checkReason(data.reason)
       if (!res) {
         await requestLoan({
           email: loggedIn.email,
@@ -63,7 +62,7 @@ const LoanRequestForm = () => {
         setSuccessMessage('Loan request Approved!');
         router.push("/")
       } else {
-        setErrorMessage("Reason already exists")
+        setErrorMessage("Please provide a different reason")
       }
       // Call the createTransfer function with the form data
     } catch (error) {

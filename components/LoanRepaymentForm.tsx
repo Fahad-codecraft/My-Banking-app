@@ -40,7 +40,7 @@ const LoanRepaymentForm = ({ loans }: LoanDropdownProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      reason: "",
+      reason: loans[0]?.reason || "",
       repayAmount: "",
     },
   });
